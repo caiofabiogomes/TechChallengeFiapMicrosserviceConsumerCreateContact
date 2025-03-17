@@ -30,6 +30,9 @@ jobs:
         with:
           dotnet-version: 8.0.x
           
+      - name: Remove existing NuGet source
+        run: dotnet nuget remove source github || echo "Source not found, skipping removal"
+      
       - name: Configure NuGet credentials
         run: |
           dotnet nuget add source "https://nuget.pkg.github.com/caiofabiogomes/index.json" \
@@ -37,6 +40,7 @@ jobs:
             --username caiofabiogomes \
             --password ${{ secrets.SECRET_NUGET_PACKAGES }} \
             --store-password-in-clear-text
+
 
       - name: Restore and Build
         run: |
