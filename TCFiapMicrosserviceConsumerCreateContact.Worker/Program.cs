@@ -1,5 +1,4 @@
 using MassTransit;
-using Microsoft.Extensions.Configuration;
 using TCFiapMicrosserviceConsumerCreateContact.Worker;
 using TechChallenge.SDK;
 
