@@ -5,6 +5,8 @@ using TechChallenge.SDK;
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
+        Task.Delay(15000).Wait();
+
         var connectionString = Environment.GetEnvironmentVariable("CONNECTION_DATABASE") ?? 
         hostContext.Configuration.GetConnectionString("DefaultConnection");
 
