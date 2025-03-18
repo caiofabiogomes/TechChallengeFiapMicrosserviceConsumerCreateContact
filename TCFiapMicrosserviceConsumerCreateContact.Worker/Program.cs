@@ -8,6 +8,8 @@ var host = Host.CreateDefaultBuilder(args)
         var connectionString = Environment.GetEnvironmentVariable("CONNECTION_DATABASE") ?? 
         hostContext.Configuration.GetConnectionString("DefaultConnection");
 
+        var envHostRabbitMqServer = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
+
         services.RegisterSdkModule(connectionString);
 
         services.AddMassTransit(x =>
@@ -16,11 +18,7 @@ var host = Host.CreateDefaultBuilder(args)
 
             x.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host("rabbitmq://localhost", h =>
-                {
-                    h.Username("guest");
-                    h.Password("guest");
-                });
+                cfg.Host(envHostRabbitMqServer);
 
                 cfg.ReceiveEndpoint("create-contact-queue", e =>
                 {
