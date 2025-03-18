@@ -1,11 +1,15 @@
 using MassTransit;
+using Microsoft.Extensions.Configuration;
 using TCFiapMicrosserviceConsumerCreateContact.Worker;
 using TechChallenge.SDK;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
-        services.RegisterSdkModule(hostContext.Configuration);
+        var connectionString = Environment.GetEnvironmentVariable("CONNECTION_DATABASE") ?? 
+        hostContext.Configuration.GetConnectionString("DefaultConnection");
+
+        services.RegisterSdkModule(connectionString);
 
         services.AddMassTransit(x =>
         {
