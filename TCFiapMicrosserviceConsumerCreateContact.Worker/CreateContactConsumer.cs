@@ -26,6 +26,14 @@ namespace TCFiapMicrosserviceConsumerCreateContact.Worker
             var phone = new Phone(message.DDD, message.Phone);
             var email = new Email(message.Email);
 
+
+            var existingContact = _contactRepository.Query()
+                .Where( x=> x.Phone.DDD == phone.DDD && x.Phone.Number == phone.Number)
+                .Any();
+
+            if (existingContact)
+                _logger.LogInformation($"Contato com o numero {phone.DDD} {phone.Number} já existe!");
+
             var contact = new Contact(name, email, phone);
 
             await _contactRepository.AddAsync(contact);
