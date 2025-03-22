@@ -31,8 +31,12 @@ namespace TCFiapMicrosserviceConsumerCreateContact.Worker
                 .Where( x=> x.Phone.DDD == phone.DDD && x.Phone.Number == phone.Number)
                 .Any();
 
-            if (existingContact)
+            if (existingContact) 
+            {
                 _logger.LogInformation($"Contato com o numero {phone.DDD} {phone.Number} já existe!");
+                return;
+            }
+               
 
             var contact = new Contact(name, email, phone);
 
